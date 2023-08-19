@@ -1,0 +1,68 @@
+button tren lcd, 1 wire - adc,
+
+- Manual hanlde
+  - 2 cach
+   1. Nhan up , down , stop.
+   2. Nhap hanh trinh - (4 button) - desired distance:(mong muon) (+/-) hien = position ()
+   , position: vi tri hien tai()
+  - nhan nut co set () pitton thay doi position(-> co trace vi tri position).
+  
+  
+- Auto: (Co nut auto de quay ve mode auto)
+  - actual(position) va next_step(vi tri chuan bi điều khiển đến) ( vi tri này là fixed từ 1 cái array cho trước ).(array -> theo phut/gio)
+  
+  1. [7][24] -> tra bang -> tra het -> stop,
+  2. Quay tu dau   
+  
+ 
+ 
+ 
+ 
+ 1. Màn hình khởi động
+ 1====================
+    Init Hardware
+2. Màn hình mặc định - main_display
+   Dòng 1. RTC -> Canh lề phải
+   
+   Dòng 2. ModeAuto (Set) - Ở màn hình này. K điều khiển gì cả. chỉ hiện giờ.
+   
+   Tương tác nút nhấn. 
+   Nhấn set -> mode auto
+   Nhấn mode -> chuyển sang màn hình mode_menu
+   
+3. Màn hình mode_menu
+   Dòng 1. ModeManual (*)-> cursor
+   Dòng 2. ModeAuto
+   Tương tác
+   Nhấn set -> chuyển sang màn hình mode tương ứng(mode_manual)
+   Nhấn mode-> chuyển sang màn hình main_display(mode_auto)
+   Nhấn up/donw -> chuyển cursor 
+   
+4. Màn hình mode_manual  (Chuyển sang từ mode_menu)
+   Dòng 1. Up/down (*) ->cursor
+   Dong 2. Estimate  
+   Tương tác
+   Nhấn set -> chuyển sang màn hình mode tương ứng (mode_updown_manual)
+   Nhấn mode-> chuyển sang màn hình main_display  (mode_estimate_manual)
+   Nhấn up/donw -> chuyển cursor.
+   4.1 Màn hình mode_updown_manual.
+   Dòng 1. Mode updownload (16 chu)
+   Dòng 2. RFU
+   Tương tác
+   Nhất up -> tăng chiều dài button
+   Nhấn down-> giảm 
+   Nhấn set -> stop
+   Nhấn mode -> chuyển về màn hình mode_manual
+   4.2 Màn hình mode_estimate_manual
+   Dòng 1. Estimate: = Posion
+   Dòng 2. Position:
+   Tương tác
+   Nhấn up/down: +/- estimate
+   Nhấn set: excute ->  (trace vị trí -> Dòng 2 Position)
+   Nhấn mode: -> chuyển về màn hình mode_manual
+5. Màn hình mode_auto (Chuyển sang từ mode_menu/main_display)
+   Dòng 1. RTC
+   Dòng 2. Position -> Next Step
+   Tương tác
+   Nhấn nút mode -> Chuyển về main_display.
+   
