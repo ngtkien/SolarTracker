@@ -5,6 +5,7 @@
 #include <Wire.h>
 #include "LcdKeyShield.h"
 #include <LiquidCrystal.h>
+#include <optional>
 #include "RTClib.h"
 #include "Define.h"
 //0:Sunday - 6:Saturday {
@@ -89,12 +90,12 @@ void initialize() {
     rightBtn.setPressedHandler(btnHandle);
 
     // Configure PWM functionalitites
-    ledcSetup(In2Channel, freq, resolution);
-    ledcSetup(In1Channel, freq, resolution);
+    // ledcSetup(In2Channel, freq, resolution);
+    // ledcSetup(In1Channel, freq, resolution);
 
-    // Attach the channel to the pin_IN2 to be controlled
-    ledcAttachPin(pin_IN1, In1Channel);
-    ledcAttachPin(pin_IN2, In2Channel);
+    // // Attach the channel to the pin_IN2 to be controlled
+    // ledcAttachPin(pin_IN1, In1Channel);
+    // ledcAttachPin(pin_IN2, In2Channel);
     motor_A_Stop(In2Channel);
 }
 void setup() {
@@ -120,9 +121,22 @@ void setup() {
     Serial.printf("Go to Application");
 
 
-    xTaskCreatePinnedToCore(button_loop, "buttonTask", 2048, NULL, 3, NULL, ARDUINO_RUNNING_CORE);
+    // xTaskCreatePinnedToCore(button_loop, "buttonTask", 1024, NULL, 3, NULL, ARDUINO_RUNNING_CORE);
     
-    // xTaskCreatePinnedToCore(readerHandle, "readerTask", 2048, NULL, 4, NULL, ARDUINO_RUNNING_CORE);
+    // xTaskCreatePinnedToCore(state_run, "readerTask", 1024, NULL, 4, NULL, ARDUINO_RUNNING_CORE);
+    //  vTaskStartScheduler();
+}  
+void state_run(void *pvParameters) {
+    if (refresh == 0) {
+        //lcdKeyPad.clear();
+        state_machine();
+        refresh = 10;
+    }
+    else {
+        --refresh;
+    }
+    
+    delay(50);
 }
 void state_cursor(){
     switch (stateScreen)
@@ -227,8 +241,9 @@ void state_machine() {
 //	        move_to_postion(TimeSeries[now.dayOfTheWeek()][now.hour()]);
           minute_now = now.hour() * 60 + now.minute();
           quarter_now = (minute_now - (minute_now % 15))/15;
+          printf("quarter now: %d", quarter_now);
           move_to_postion(TimeSeries_Quarter_Minute[now.dayOfTheWeek()][quarter_now]);
-	        break;
+	      break;
 	    }
         
     }
@@ -285,7 +300,7 @@ void buttonHandle() {
             break;
         case KEYPAD_LEFT:         
             Serial.println("Left");
-            buttonLeft();
+            buttonOk();
             break;
         case KEYPAD_DOWN:
             Serial.println("Down");
@@ -297,13 +312,13 @@ void buttonHandle() {
             break;
         case KEYPAD_RIGHT:
             Serial.println("Right");
-            buttonRight();
+            buttonMode();
             break;
         }
     }
 }
 void loop() {
-    // button_loop();
+    button_loop();
     if (refresh == 0) {
         //lcdKeyPad.clear();
         state_machine();

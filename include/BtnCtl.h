@@ -12,12 +12,12 @@
 #include "Button2.h"
 void btnHandle(Button2& btn);
 void buttonSelect();
-void buttonLeft();
+void buttonOk();
 void buttonDown();
 void buttonUp();
-void buttonRight();
+void buttonMode();
 
 
-void button_loop(void *pvParameters );
+void button_loop( );
 #endif
 

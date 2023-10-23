@@ -33,8 +33,8 @@ void btnHandle(Button2& btn)
     else  if (btn == modeBtn)
     {
         //ButtonMode
-
-        buttonLeft();
+        buttonMode();
+        
     }
     else if (btn == downBtn)
     {
@@ -46,7 +46,7 @@ void btnHandle(Button2& btn)
     }
     else if (btn == rightBtn)
     {
-        buttonRight();
+        buttonOk();
     }
 
 }
@@ -79,7 +79,7 @@ void buttonSelect() {
         break;
     }
 }
-void buttonLeft() {
+void buttonOk() {
 
     switch (stateScreen) {
 
@@ -161,7 +161,7 @@ void buttonUp() {
         break;
     }
 }
-void buttonRight() {
+void buttonMode() {
     switch (stateScreen) {
     case MAIN:
         //TODO: MAIN->MANUAL
@@ -187,7 +187,7 @@ void buttonRight() {
     }
 }
 
-void button_loop(void *pvParameters) {
+void button_loop() {
     selectBtn.loop();
     modeBtn.loop();
     downBtn.loop();

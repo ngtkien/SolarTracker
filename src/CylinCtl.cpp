@@ -43,35 +43,48 @@ double curr_length_feedback() {
     }
     //Serial.printf("y before: %f\n", y);
     y = y / 100;
-    //Serial.println(y);
+
+    Serial.print("analog avg: ");
+    Serial.println(y);
     //y = analogRead(2);
-    ymm = -y*100/906+374800/906;
+    if (y == 0){
+      ymm = 0;
+    }
+    else ymm = -y*100/906+374800/906;
+
     Serial.println(ymm);
+    
     return ymm;
     //delay(50);
 }
 
 void motor_A_Stop(int channel) {
-    ledcDetachPin(pin_IN1);
-    ledcDetachPin(pin_IN2);
+    // ledcDetachPin(pin_IN1);
+    // ledcDetachPin(pin_IN2);
     digitalWrite(pin_IN1, LOW);
     digitalWrite(pin_IN2, LOW);
     //ledcWrite(channel, MAX_SPEED);
 }
 void motor_A_Forward(int speed, int channel) {
-    speed = constrain(speed, MIN_SPEED, MAX_SPEED);
-    ledcAttachPin(pin_IN2, channel);
-    ledcDetachPin(pin_IN1);
+    // speed = constrain(speed, MIN_SPEED, MAX_SPEED);
+    // ledcAttachPin(pin_IN2, channel);
+    // ledcDetachPin(pin_IN1);
+    // digitalWrite(pin_IN1, HIGH);
+    // ledcWrite(channel, MAX_SPEED - speed);
+
     digitalWrite(pin_IN1, HIGH);
-    ledcWrite(channel, MAX_SPEED - speed);
+    digitalWrite(pin_IN2, LOW);
 }
 
 void motor_A_Backward(int speed, int channel) {
-    speed = constrain(speed, MIN_SPEED, MAX_SPEED);
-    ledcAttachPin(pin_IN1, channel);
-    ledcDetachPin(pin_IN2);
+    // speed = constrain(speed, MIN_SPEED, MAX_SPEED);
+    // ledcAttachPin(pin_IN1, channel);
+    // ledcDetachPin(pin_IN2);
+    // digitalWrite(pin_IN2, HIGH);
+    // ledcWrite(channel, MAX_SPEED - speed);
+
+    digitalWrite(pin_IN1, LOW);
     digitalWrite(pin_IN2, HIGH);
-    ledcWrite(channel, MAX_SPEED - speed);
 }
 void move_to_postion(double pos)
 {

@@ -15,11 +15,17 @@ constexpr auto pin_IN3 = 14;
 constexpr auto pin_IN4 = 27;
 
 //New Button  SEL: GPIO39, MODE: GPIO36, DOWN: GPIO35, UP: GPIO34, OK: GPIO25
+// constexpr auto pin_SELECT = 39;
+// constexpr auto pin_MODE = 36;
+// constexpr auto pin_DOWN = 35;
+// constexpr auto pin_UP = 34;
+// constexpr auto pin_RIGHT = 25;
+
 constexpr auto pin_SELECT = 39;
-constexpr auto pin_MODE = 36;
-constexpr auto pin_DOWN = 35;
-constexpr auto pin_UP = 34;
-constexpr auto pin_RIGHT = 25;
+constexpr auto pin_MODE = 25;
+constexpr auto pin_DOWN = 34;
+constexpr auto pin_UP = 35;
+constexpr auto pin_RIGHT = 36;
 constexpr auto MAX_SPEED = 4096;
 constexpr auto MIN_SPEED = 0;
 constexpr auto SPEED = 1700;
