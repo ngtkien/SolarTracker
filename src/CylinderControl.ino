@@ -111,7 +111,7 @@ void Calibrate(){
     lcdKeyPad.setCursor(0, 0);
     lcdKeyPad.printf("    Calib  A    ");
 
-    motor_A_Forward(SPEED, In2Channel);
+    motor_A_Forward(0, In2Channel);
 
     delay(5000);
 
@@ -122,7 +122,7 @@ void Calibrate(){
     lcdKeyPad.clear();
     lcdKeyPad.setCursor(0, 0);
     lcdKeyPad.printf("    Calib  B    ");
-    motor_A_backward(SPEED, In1Channel);
+    motor_A_Backward(0, In1Channel);
 
 
     delay(5000);
