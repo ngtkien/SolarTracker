@@ -10,6 +10,8 @@
 #endif
 #include "Define.h"
 #include "Button2.h"
+double calibMax();
+double calibMin();
 void move_to_postion(double pos);
 void move_estimate(int m_esti_move);
 double curr_length_feedback();

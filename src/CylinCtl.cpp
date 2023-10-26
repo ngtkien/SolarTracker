@@ -31,6 +31,66 @@ extern  int In1Channel;
 extern  int In2Channel;
 extern  int resolution; //Resolution 8, 10, 12, 15
 
+int anaA = 279;
+int anaB = 923;
+double A = anaA*4096/3300;
+double B = anaB*4096/3300;
+
+double calibMax(){
+    double y;
+    uint32_t x;
+    for (byte i = 0; i < 10; i++) {
+        x = analogRead(2);
+        Serial.printf("x: %d\n", x);
+        y += double(x); //D2
+    }
+    //Serial.printf("y before: %f\n", y);
+    y = y / 10;
+
+    anaB = y;
+    B = anaB*4096/3300;
+    return B;
+}
+double calibMin(){
+  double y;
+    uint32_t x;
+    for (byte i = 0; i < 10; i++) {
+        x = analogRead(2);
+        Serial.printf("x: %d\n", x);
+        y += double(x); //D2
+    }
+    //Serial.printf("y before: %f\n", y);
+    y = y / 10;
+    anaA = y;
+    A = anaA*4096/3300;
+    return A;
+}
+double new_curr_length_feedback(double A, double B) {
+    double y;
+    double ymm;
+    uint32_t x;
+    y = 0;
+    for (byte i = 0; i < 100; i++) {
+        x = analogRead(2);
+        //Serial.printf("x: %d\n", x);
+        y += double(x); //D2
+    }
+    //Serial.printf("y before: %f\n", y);
+    y = y / 100;
+
+    Serial.print("analog avg: ");
+    Serial.println(y);
+    //y = analogRead(2);
+    if (y == 0){
+      ymm = 0;
+    }
+    else ymm = (60/(B-A)) * y + 60*B/(A-B);
+
+    Serial.println(ymm);
+    
+    return ymm;
+    //delay(50);
+}
 double curr_length_feedback() {
     double y;
     double ymm;
@@ -50,7 +110,7 @@ double curr_length_feedback() {
     if (y == 0){
       ymm = 0;
     }
-    else ymm = -y*100/906+374800/906;
+    else ymm = (60/(B-A)) * y + 60*B/(A-B);
 
     Serial.println(ymm);
     

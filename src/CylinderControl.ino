@@ -98,6 +98,40 @@ void initialize() {
     // ledcAttachPin(pin_IN2, In2Channel);
     motor_A_Stop(In2Channel);
 }
+
+void Calibrate(){
+    Serial.println("Calibrate");
+    lcdKeyPad.setCursor(0, 0);
+    lcdKeyPad.printf("     Calib    ");
+    lcdKeyPad.setCursor(0,1);
+    lcdKeyPad.printf("     Mode     ");
+
+    delay(1000);
+    lcdKeyPad.clear();
+    lcdKeyPad.setCursor(0, 0);
+    lcdKeyPad.printf("    Calib  A    ");
+
+    motor_A_Forward(SPEED, In2Channel);
+
+    delay(5000);
+
+    double b = calibMax();
+    lcdKeyPad.setCursor(0, 0);
+    lcdKeyPad.printf("  New B: %f", b);
+
+    lcdKeyPad.clear();
+    lcdKeyPad.setCursor(0, 0);
+    lcdKeyPad.printf("    Calib  B    ");
+    motor_A_backward(SPEED, In1Channel);
+
+
+    delay(5000);
+
+    double a = calibMin();
+    lcdKeyPad.setCursor(0, 0);
+    lcdKeyPad.printf("  New A: %f", a);
+
+}
 void setup() {
   
     lcdKeyPad.begin(16, 2);
