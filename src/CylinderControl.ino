@@ -46,7 +46,8 @@ int In1Channel = 0;
 int In2Channel = 0;
 int resolution = 12; //Resolution 8, 10, 12, 15
 //LiquidCrystal lcdKeyPad(pin_RS, pin_EN, pin_d4, pin_d5, pin_d6, pin_d7);
-
+extern double A;
+extern double B;
 
 
 LCDKeypad lcdKeyPad;
@@ -111,26 +112,28 @@ void Calibrate(){
     lcdKeyPad.setCursor(0, 0);
     lcdKeyPad.printf("    Calib  A    ");
 
+    Serial.println("Move to A");
+    motor_A_Backward(0, In1Channel);
+
+    delay(5000);
+
+    double a = calibMin();
+    Serial.printf("a: %f\n", a);
+    lcdKeyPad.setCursor(0, 0);
+    lcdKeyPad.printf("  New A: %f", a);
+
+    delay(1000);
+    lcdKeyPad.clear();
+    lcdKeyPad.printf("    Calib  B    ");
+    Serial.println("Move to B");
     motor_A_Forward(0, In2Channel);
 
     delay(5000);
 
     double b = calibMax();
+    Serial.printf("b: %f\n", b);
     lcdKeyPad.setCursor(0, 0);
     lcdKeyPad.printf("  New B: %f", b);
-
-    lcdKeyPad.clear();
-    lcdKeyPad.setCursor(0, 0);
-    lcdKeyPad.printf("    Calib  B    ");
-    motor_A_Backward(0, In1Channel);
-
-
-    delay(5000);
-
-    double a = calibMin();
-    lcdKeyPad.setCursor(0, 0);
-    lcdKeyPad.printf("  New A: %f", a);
-
 }
 void setup() {
   
@@ -248,7 +251,7 @@ void state_machine() {
         default: 
             lcdKeyPad.printf("Scr State: Stop");
         }
-		if(curr_length_feedback() >= 100 || curr_length_feedback() <= 0)
+		if(new_curr_length_feedback(A, B) >= 60 || new_curr_length_feedback(A, B) <= 0)
 		{
             scroll_state = STOP;
 		}
@@ -267,7 +270,7 @@ void state_machine() {
 	        Serial.println("State: Mode Auto");
 	        lcdKeyPad.setCursor(0, 0);
           lcdKeyPad.printf("Auto:   %02d:%02d:%02d", now.hour(), now.minute(), now.second());
-          pos = curr_length_feedback();
+          pos = new_curr_length_feedback(A, B);
 	        lcdKeyPad.setCursor(0, 1);
 	        lcdKeyPad.printf("Pos: %2.f mm      ", pos);
 //          Serial.println(now.dayOfTheWeek());

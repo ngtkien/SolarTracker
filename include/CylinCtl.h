@@ -15,6 +15,7 @@ double calibMin();
 void move_to_postion(double pos);
 void move_estimate(int m_esti_move);
 double curr_length_feedback();
+double new_curr_length_feedback(double A, double B);
 void motor_A_Stop(int channel);
 void motor_A_Forward(int speed, int channel);
 void motor_A_Backward(int speed, int channel);

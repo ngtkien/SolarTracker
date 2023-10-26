@@ -110,7 +110,7 @@ double curr_length_feedback() {
     if (y == 0){
       ymm = 0;
     }
-    else ymm = (60/(B-A)) * y + 60*B/(A-B);
+    else ymm = (60/(B-A)) * y + 60*A/(A-B);
 
     Serial.println(ymm);
     
@@ -152,7 +152,7 @@ void move_to_postion(double pos)
     //pos_nex = pos
     Serial.println("pos input");
     Serial.println(pos);
-    double pos_curr = curr_length_feedback();
+    double pos_curr = new_curr_length_feedback(A, B);
     Serial.println("pos curr");
     Serial.println(pos_curr);
     //double pos_next;
@@ -171,7 +171,7 @@ void move_to_postion(double pos)
               lcdKeyPad.printf("Auto:   %02d:%02d:%02d", now.hour(), now.minute(), now.second());
             }
             delay(50);
-            pos_curr = curr_length_feedback();
+            pos_curr = new_curr_length_feedback(A, B);
             //Serial.println("pos_curr");
             //Serial.println(pos_curr);
             //Serial.println("pos input");
@@ -179,7 +179,7 @@ void move_to_postion(double pos)
         } while ((pos_curr < pos));
         motor_A_Stop(In2Channel);
         delay(50);
-        pos_curr = curr_length_feedback();
+        pos_curr = new_curr_length_feedback(A, B);
         if(pos_curr < pos){
           motor_A_Forward(SPEED_F, In2Channel);
           do
@@ -189,7 +189,7 @@ void move_to_postion(double pos)
                 lcdKeyPad.printf("Auto:   %02d:%02d:%02d", now.hour(), now.minute(), now.second());
               }
               delay(50);
-              pos_curr = curr_length_feedback();
+              pos_curr = new_curr_length_feedback(A, B);
               //Serial.println("pos_curr continue");
               //Serial.println(pos_curr);
               //Serial.println("pos input");
@@ -199,7 +199,7 @@ void move_to_postion(double pos)
           //Serial.println(pos_curr);
           motor_A_Stop(In2Channel);
           delay(50);
-          pos_curr = curr_length_feedback();
+          pos_curr = new_curr_length_feedback(A, B);
           if(pos_curr < pos){
             motor_A_Forward(SPEED_F, In2Channel);
             do
@@ -209,7 +209,7 @@ void move_to_postion(double pos)
                   lcdKeyPad.printf("Auto:   %02d:%02d:%02d", now.hour(), now.minute(), now.second());
                 }
                 delay(50);
-                pos_curr = curr_length_feedback();
+                pos_curr = new_curr_length_feedback(A, B);
                 //Serial.println("pos_curr continue");
                 //Serial.println(pos_curr);
                 //Serial.println("pos input");
@@ -229,7 +229,7 @@ void move_to_postion(double pos)
                 lcdKeyPad.printf("Auto:   %02d:%02d:%02d", now.hour(), now.minute(), now.second());
               }
               delay(50);
-              pos_curr = curr_length_feedback();
+              pos_curr = new_curr_length_feedback(A, B);
 //              Serial.println("pos_curr continue1");
 //              Serial.println(pos_curr);
 //              Serial.println("pos input");
@@ -251,7 +251,7 @@ void move_to_postion(double pos)
               lcdKeyPad.printf("Auto:   %02d:%02d:%02d", now.hour(), now.minute(), now.second());
             }
             delay(50);
-            pos_curr = curr_length_feedback();
+            pos_curr = new_curr_length_feedback(A, B);
             //Serial.println("pos_curr");
             //Serial.println(pos_curr);
             //Serial.println("pos input");
@@ -259,7 +259,7 @@ void move_to_postion(double pos)
         } while ((pos_curr > pos));
         motor_A_Stop(In1Channel);
         delay(50);
-        pos_curr = curr_length_feedback();
+        pos_curr = new_curr_length_feedback(A, B);
         if(pos_curr > pos){
           motor_A_Backward(SPEED, In1Channel);
           do
@@ -269,7 +269,7 @@ void move_to_postion(double pos)
                 lcdKeyPad.printf("Auto:   %02d:%02d:%02d", now.hour(), now.minute(), now.second());
               }
               delay(50);
-              pos_curr = curr_length_feedback();
+              pos_curr = new_curr_length_feedback(A, B);
 //              Serial.println("pos_curr continue1");
 //              Serial.println(pos_curr);
 //              Serial.println("pos input");
@@ -279,7 +279,7 @@ void move_to_postion(double pos)
 //          Serial.println(pos_curr);
           motor_A_Stop(In1Channel);
           delay(50);
-          pos_curr = curr_length_feedback();
+          pos_curr = new_curr_length_feedback(A, B);
           if(pos_curr > pos){
             motor_A_Backward(SPEED, In1Channel);
             do
@@ -289,7 +289,7 @@ void move_to_postion(double pos)
                   lcdKeyPad.printf("Auto:   %02d:%02d:%02d", now.hour(), now.minute(), now.second());
                 }
                 delay(50);
-                pos_curr = curr_length_feedback();
+                pos_curr = new_curr_length_feedback(A, B);
 //                Serial.println("pos_curr continue2");
 //                Serial.println(pos_curr);
 //                Serial.println("pos input");
@@ -308,7 +308,7 @@ void move_to_postion(double pos)
                   lcdKeyPad.printf("Auto:   %02d:%02d:%02d", now.hour(), now.minute(), now.second());
                 }
                 delay(50);
-                pos_curr = curr_length_feedback();
+                pos_curr = new_curr_length_feedback(A, B);
 //                Serial.println("pos_curr continue2'");
 //                Serial.println(pos_curr);
 //                Serial.println("pos input");
@@ -328,7 +328,7 @@ void move_to_postion(double pos)
                   lcdKeyPad.printf("Auto:   %02d:%02d:%02d", now.hour(), now.minute(), now.second());
                 }
                 delay(50);
-                pos_curr = curr_length_feedback();
+                pos_curr = new_curr_length_feedback(A, B);
 //                Serial.println("pos_curr continue1'");
 //                Serial.println(pos_curr);
 //                Serial.println("pos input");
@@ -343,14 +343,14 @@ void move_to_postion(double pos)
 void move_estimate(int m_esti_move)
 {
     //pos_next = pos_current +- m_esti_move
-    byte pos_curr = curr_length_feedback();
+    byte pos_curr = new_curr_length_feedback(A, B);
     byte pos_next;
     if (m_esti_move > 0)
     { 
         do
         {
           motor_A_Forward(SPEED_F, In2Channel);
-          pos_next = curr_length_feedback();
+          pos_next = new_curr_length_feedback(A, B);
             //Di toi lon hon hoac bang thi dung
         } while (!(pos_next >= pos_curr + m_esti_move));
         motor_A_Stop(In2Channel);
@@ -360,7 +360,7 @@ void move_estimate(int m_esti_move)
         do
         {
             motor_A_Backward(SPEED, In1Channel);
-            pos_next = curr_length_feedback();
+            pos_next = new_curr_length_feedback(A, B);
         } while (!(pos_next <= pos_curr + m_esti_move));
         motor_A_Stop(In1Channel);
 
