@@ -144,6 +144,7 @@ void setup() {
 
     initialize();
 
+    Calibrate();
     stateScreen = ScreenLcd::MAIN;
     cursor = LINE2;
 
