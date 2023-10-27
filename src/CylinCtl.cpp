@@ -47,9 +47,9 @@ double calibMax(){
     //Serial.printf("y before: %f\n", y);
     y = y / 10;
 
-    anaB = y;
-    Serial.printf("anaB: %f\n", anaB);
-    B = anaB*4096/3300;
+    B = y;
+    Serial.printf("B: %f\n", B);
+    //B = anaB*4096/3300;
     return B;
 }
 double calibMin(){
@@ -62,8 +62,9 @@ double calibMin(){
     }
     //Serial.printf("y before: %f\n", y);
     y = y / 10;
-    anaA = y;
-    A = anaA*4096/3300;
+    A = y;
+    Serial.printf("A: %f\n", A);
+    //A = anaA*4096/3300;
     return A;
 }
 double new_curr_length_feedback(double A, double B) {
@@ -85,7 +86,7 @@ double new_curr_length_feedback(double A, double B) {
     if (y == 0){
       ymm = 0;
     }
-    else ymm = (60/(B-A)) * y + 60*B/(A-B);
+    else ymm = (60/(B-A)) * y + 60*A/(A-B);
 
     Serial.println(ymm);
     
