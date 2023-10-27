@@ -154,7 +154,7 @@ void buttonUp() {
         break;
     case MANUAL_ESTI:
         Serial.println("Manual ESTI: increase esti_move");
-        if (esti_index + esti_move < 100)
+        if (esti_index + esti_move < 60)
         {
             ++esti_move;
         }

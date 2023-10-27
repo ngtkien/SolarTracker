@@ -31,8 +31,8 @@ extern  int In1Channel;
 extern  int In2Channel;
 extern  int resolution; //Resolution 8, 10, 12, 15
 
-int anaA = 279;
-int anaB = 923;
+double anaA = 279;
+double anaB = 923;
 double A = anaA*4096/3300;
 double B = anaB*4096/3300;
 
@@ -48,6 +48,7 @@ double calibMax(){
     y = y / 10;
 
     anaB = y;
+    Serial.printf("anaB: %f\n", anaB);
     B = anaB*4096/3300;
     return B;
 }
