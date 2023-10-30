@@ -128,25 +128,25 @@ void motor_A_Stop(int channel) {
     //ledcWrite(channel, MAX_SPEED);
 }
 void motor_A_Forward(int speed, int channel) {
-    // speed = constrain(speed, MIN_SPEED, MAX_SPEED);
-    // ledcAttachPin(pin_IN2, channel);
-    // ledcDetachPin(pin_IN1);
-    // digitalWrite(pin_IN1, HIGH);
-    // ledcWrite(channel, MAX_SPEED - speed);
-
+    speed = constrain(speed, MIN_SPEED, MAX_SPEED);
+    ledcAttachPin(pin_IN2, channel);
+    ledcDetachPin(pin_IN1);
     digitalWrite(pin_IN1, HIGH);
-    digitalWrite(pin_IN2, LOW);
+    ledcWrite(channel, MAX_SPEED - speed);
+
+    // digitalWrite(pin_IN1, HIGH);
+    // digitalWrite(pin_IN2, LOW);
 }
 
 void motor_A_Backward(int speed, int channel) {
-    // speed = constrain(speed, MIN_SPEED, MAX_SPEED);
-    // ledcAttachPin(pin_IN1, channel);
-    // ledcDetachPin(pin_IN2);
-    // digitalWrite(pin_IN2, HIGH);
-    // ledcWrite(channel, MAX_SPEED - speed);
-
-    digitalWrite(pin_IN1, LOW);
+    speed = constrain(speed, MIN_SPEED, MAX_SPEED);
+    ledcAttachPin(pin_IN1, channel);
+    ledcDetachPin(pin_IN2);
     digitalWrite(pin_IN2, HIGH);
+    ledcWrite(channel, MAX_SPEED - speed);
+
+    // digitalWrite(pin_IN1, LOW);
+    // digitalWrite(pin_IN2, HIGH);
 }
 void move_to_postion(double pos)
 {

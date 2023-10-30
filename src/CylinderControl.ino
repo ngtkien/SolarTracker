@@ -91,12 +91,12 @@ void initialize() {
     rightBtn.setPressedHandler(btnHandle);
 
     // Configure PWM functionalitites
-    // ledcSetup(In2Channel, freq, resolution);
-    // ledcSetup(In1Channel, freq, resolution);
+    ledcSetup(In2Channel, freq, resolution);
+    ledcSetup(In1Channel, freq, resolution);
 
-    // // Attach the channel to the pin_IN2 to be controlled
-    // ledcAttachPin(pin_IN1, In1Channel);
-    // ledcAttachPin(pin_IN2, In2Channel);
+    // Attach the channel to the pin_IN2 to be controlled
+    ledcAttachPin(pin_IN1, In1Channel);
+    ledcAttachPin(pin_IN2, In2Channel);
     motor_A_Stop(In2Channel);
 }
 
@@ -260,10 +260,10 @@ void state_machine() {
         esti_index = curr_length_feedback();
         Serial.println("State: Manual Esti");
         lcdKeyPad.setCursor(0, 0);
-        lcdKeyPad.printf("Pos: %03d   ",esti_index);
+        lcdKeyPad.printf("Pos: %03d Mar: ",esti_index);
         lcdKeyPad.setCursor(0, 1);
         final_move = esti_index + esti_move;
-        lcdKeyPad.printf("Est: %03d Mar: %2d    ", final_move, esti_move);
+        lcdKeyPad.printf("Est: %03d  %2d ", final_move, esti_move);
         break;
     case AUTO:
 	    {
