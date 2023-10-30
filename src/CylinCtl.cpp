@@ -8,7 +8,7 @@
 #include "RTClib.h"
 #include <Wire.h>
 
-extern  Button2 selectBtn;
+extern Button2 selectBtn;
 extern Button2 modeBtn;
 extern Button2 downBtn;
 extern Button2 upBtn;
@@ -121,11 +121,11 @@ double curr_length_feedback() {
 }
 
 void motor_A_Stop(int channel) {
-    // ledcDetachPin(pin_IN1);
-    // ledcDetachPin(pin_IN2);
-    digitalWrite(pin_IN1, LOW);
-    digitalWrite(pin_IN2, LOW);
-    //ledcWrite(channel, MAX_SPEED);
+    ledcDetachPin(pin_IN1);
+    ledcDetachPin(pin_IN2);
+    //digitalWrite(pin_IN1, LOW);
+    //digitalWrite(pin_IN2, LOW);
+    ledcWrite(channel, MAX_SPEED);
 }
 void motor_A_Forward(int speed, int channel) {
     speed = constrain(speed, MIN_SPEED, MAX_SPEED);

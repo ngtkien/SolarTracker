@@ -113,9 +113,9 @@ void Calibrate(){
     lcdKeyPad.printf("    Calib  A    ");
 
     Serial.println("Move to A");
-    motor_A_Backward(0, In1Channel);
+    motor_A_Backward(SPEED, In1Channel);
 
-    delay(5000);
+    delay(10000);
 
     double a = calibMin();
     Serial.printf("a: %f\n", a);
@@ -126,9 +126,9 @@ void Calibrate(){
     lcdKeyPad.clear();
     lcdKeyPad.printf("    Calib  B    ");
     Serial.println("Move to B");
-    motor_A_Forward(0, In2Channel);
+    motor_A_Forward(SPEED_F, In2Channel);
 
-    delay(5000);
+    delay(10000);
 
     double b = calibMax();
     Serial.printf("b: %f\n", b);
