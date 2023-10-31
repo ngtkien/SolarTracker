@@ -8,7 +8,7 @@
 #include "RTClib.h"
 #include <Wire.h>
 
-extern  Button2 selectBtn;
+extern Button2 selectBtn;
 extern Button2 modeBtn;
 extern Button2 downBtn;
 extern Button2 upBtn;
@@ -47,9 +47,9 @@ double calibMax(){
     //Serial.printf("y before: %f\n", y);
     y = y / 10;
 
-    anaB = y;
-    Serial.printf("anaB: %f\n", anaB);
-    B = anaB*4096/3300;
+    B = y;
+    Serial.printf("B: %f\n", B);
+    //B = anaB*4096/3300;
     return B;
 }
 double calibMin(){
@@ -62,8 +62,9 @@ double calibMin(){
     }
     //Serial.printf("y before: %f\n", y);
     y = y / 10;
-    anaA = y;
-    A = anaA*4096/3300;
+    A = y;
+    Serial.printf("A: %f\n", A);
+    //A = anaA*4096/3300;
     return A;
 }
 double new_curr_length_feedback(double A, double B) {
@@ -85,7 +86,7 @@ double new_curr_length_feedback(double A, double B) {
     if (y == 0){
       ymm = 0;
     }
-    else ymm = (60/(B-A)) * y + 60*B/(A-B);
+    else ymm = (60/(B-A)) * y + 60*A/(A-B);
 
     Serial.println(ymm);
     
@@ -120,32 +121,32 @@ double curr_length_feedback() {
 }
 
 void motor_A_Stop(int channel) {
-    // ledcDetachPin(pin_IN1);
-    // ledcDetachPin(pin_IN2);
-    digitalWrite(pin_IN1, LOW);
-    digitalWrite(pin_IN2, LOW);
-    //ledcWrite(channel, MAX_SPEED);
+    ledcDetachPin(pin_IN1);
+    ledcDetachPin(pin_IN2);
+    //digitalWrite(pin_IN1, LOW);
+    //digitalWrite(pin_IN2, LOW);
+    ledcWrite(channel, MAX_SPEED);
 }
 void motor_A_Forward(int speed, int channel) {
-    // speed = constrain(speed, MIN_SPEED, MAX_SPEED);
-    // ledcAttachPin(pin_IN2, channel);
-    // ledcDetachPin(pin_IN1);
-    // digitalWrite(pin_IN1, HIGH);
-    // ledcWrite(channel, MAX_SPEED - speed);
-
+    speed = constrain(speed, MIN_SPEED, MAX_SPEED);
+    ledcAttachPin(pin_IN2, channel);
+    ledcDetachPin(pin_IN1);
     digitalWrite(pin_IN1, HIGH);
-    digitalWrite(pin_IN2, LOW);
+    ledcWrite(channel, MAX_SPEED - speed);
+
+    // digitalWrite(pin_IN1, HIGH);
+    // digitalWrite(pin_IN2, LOW);
 }
 
 void motor_A_Backward(int speed, int channel) {
-    // speed = constrain(speed, MIN_SPEED, MAX_SPEED);
-    // ledcAttachPin(pin_IN1, channel);
-    // ledcDetachPin(pin_IN2);
-    // digitalWrite(pin_IN2, HIGH);
-    // ledcWrite(channel, MAX_SPEED - speed);
-
-    digitalWrite(pin_IN1, LOW);
+    speed = constrain(speed, MIN_SPEED, MAX_SPEED);
+    ledcAttachPin(pin_IN1, channel);
+    ledcDetachPin(pin_IN2);
     digitalWrite(pin_IN2, HIGH);
+    ledcWrite(channel, MAX_SPEED - speed);
+
+    // digitalWrite(pin_IN1, LOW);
+    // digitalWrite(pin_IN2, HIGH);
 }
 void move_to_postion(double pos)
 {
