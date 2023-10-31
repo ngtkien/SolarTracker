@@ -28,7 +28,7 @@ constexpr auto pin_UP = 35;
 constexpr auto pin_RIGHT = 36;
 constexpr auto MAX_SPEED = 4096;
 constexpr auto MIN_SPEED = 0;
-constexpr auto SPEED = 2000;
+constexpr auto SPEED = 1900;
 constexpr auto SPEED_F = 2000;
 
 // Setting PWM properties
